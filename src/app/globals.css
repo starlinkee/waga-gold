@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Design tokens — jedyne miejsce z kolorami. */
+@theme {
+  --color-bg: #0b0d10;
+  --color-surface: #14171c;
+  --color-border: #252a31;
+  --color-fg: #e8ecf1;
+  --color-muted: #8b94a1;
+  --color-accent: #9fe3ff; /* lodowy błękit, jak podświetlenie LCD */
+  --color-cta: #d7262e; /* tylko CTA, jak zatrzaski walizki */
+  --color-cta-fg: #ffffff;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-bg);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}

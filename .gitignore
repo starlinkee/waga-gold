@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env*
+!.env.example
+.claude/
+.mcp.json
+.openrig/
+.roadmap/
+test-results/
+playwright-report/
+*.tsbuildinfo
+/out

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "enabledMcpjsonServers": [
+    "exa",
+    "context7"
+  ]
+}
