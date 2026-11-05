@@ -72,10 +72,16 @@ export const de = {
     mockCancel: "Abbrechen",
   },
   danke: {
-    title: "Danke für Ihre Bestellung",
-    text: "Ihre Zahlung ist eingegangen. Wir melden uns mit weiteren Informationen zum Versand.",
-    none: "Keine Bestellung gefunden",
-    noneText: "Zu diesem Link liegt keine bezahlte Bestellung vor.",
+    titles: {
+      paid: "Danke für Ihre Bestellung",
+      pending: "Bestellung eingegangen",
+      none: "Keine Bestellung gefunden",
+    },
+    texts: {
+      paid: "Ihre Zahlung ist eingegangen. Wir melden uns mit weiteren Informationen zum Versand.",
+      pending: "Ihre Zahlung wird noch bearbeitet. Versandt wird erst nach Zahlungseingang.",
+      none: "Zu diesem Link liegt keine bezahlte Bestellung vor.",
+    },
     home: "Zur Startseite",
   },
   abgebrochen: {

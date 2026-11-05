@@ -6,6 +6,7 @@ const mask = (v: string | null) => (v ? `${v.slice(0, 2)}***` : null);
 export class LogNotifier implements OrderNotifier {
   async notifyOwner(order: Order): Promise<void> {
     console.info("[order-notification]", {
+      test: order.isTest ?? false,
       sessionId: order.sessionId,
       amount: order.amount,
       currency: order.currency,

@@ -4,7 +4,7 @@ import Stripe from "stripe";
 const SECRET = "whsec_e2e_dummy";
 const BUY = "Jetzt kaufen – 499 €";
 
-function signedEvent(type = "checkout.session.completed") {
+function signedEvent(type = "checkout.session.completed", paymentStatus = "paid") {
   const payload = JSON.stringify({
     id: "evt_test",
     object: "event",
@@ -15,6 +15,7 @@ function signedEvent(type = "checkout.session.completed") {
         object: "checkout.session",
         amount_total: 49900,
         currency: "eur",
+        payment_status: paymentStatus,
         customer_details: { email: "a@b.at", name: "Test" },
       },
     },
@@ -63,14 +64,30 @@ test("GET /api/checkout -> 405", async ({ request }) => {
   expect((await request.get("/api/checkout")).status()).toBe(405);
 });
 
-test("Webhook: gültige Signatur -> 200", async ({ request }) => {
-  const { payload, header } = signedEvent();
+async function post(request: import("@playwright/test").APIRequestContext, type: string, status: string) {
+  const { payload, header } = signedEvent(type, status);
   const res = await request.post("/api/stripe/webhook", {
     data: payload,
     headers: { "stripe-signature": header, "content-type": "application/json" },
   });
   expect(res.status()).toBe(200);
-  expect(await res.json()).toEqual({ received: true });
+  return res.json();
+}
+
+test("Webhook: completed + paid -> Benachrichtigung", async ({ request }) => {
+  expect(await post(request, "checkout.session.completed", "paid")).toEqual({ received: true, notified: true });
+});
+
+test("Webhook: completed + unpaid -> keine Benachrichtigung", async ({ request }) => {
+  expect(await post(request, "checkout.session.completed", "unpaid")).toEqual({ received: true, notified: false });
+});
+
+test("Webhook: async_payment_succeeded -> Benachrichtigung", async ({ request }) => {
+  expect(await post(request, "checkout.session.async_payment_succeeded", "paid")).toEqual({ received: true, notified: true });
+});
+
+test("Webhook: async_payment_failed -> 200, keine Benachrichtigung", async ({ request }) => {
+  expect(await post(request, "checkout.session.async_payment_failed", "unpaid")).toEqual({ received: true, notified: false });
 });
 
 test("Webhook: falsche oder fehlende Signatur -> 400", async ({ request }) => {

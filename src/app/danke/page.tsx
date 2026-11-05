@@ -6,24 +6,29 @@ import { getStripe, hasStripeKey, isMock } from "@/lib/stripe";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
-async function isPaid(sessionId: string): Promise<boolean> {
-  if (isMock() && /^mock_[a-z0-9]+$/.test(sessionId)) return true;
-  if (!/^cs_[A-Za-z0-9_]+$/.test(sessionId) || !hasStripeKey()) return false;
+type Status = "paid" | "pending" | "none";
+
+async function getStatus(sessionId: string): Promise<Status> {
+  if (isMock() && /^mock_[a-z0-9]+$/.test(sessionId)) return "paid";
+  if (!/^cs_[A-Za-z0-9_]+$/.test(sessionId) || !hasStripeKey()) return "none";
   try {
     const s = await getStripe().checkout.sessions.retrieve(sessionId);
-    return s.payment_status === "paid";
+    if (s.payment_status === "paid") return "paid";
+    // Opóźniona metoda płatności: zamówienie złożone, pieniądze jeszcze nie.
+    if (s.status === "complete" && s.payment_status === "unpaid") return "pending";
+    return "none";
   } catch {
-    return false;
+    return "none";
   }
 }
 
 async function Result({ searchParams }: Pick<PageProps<"/danke">, "searchParams">) {
   const { session_id } = await searchParams;
-  const paid = typeof session_id === "string" && (await isPaid(session_id));
+  const status = typeof session_id === "string" ? await getStatus(session_id) : "none";
   return (
     <div className="mx-auto max-w-2xl px-4 py-24 text-center">
-      <h1 className="text-3xl font-semibold">{paid ? de.danke.title : de.danke.none}</h1>
-      <p className="mt-4 text-muted">{paid ? de.danke.text : de.danke.noneText}</p>
+      <h1 className="text-3xl font-semibold">{de.danke.titles[status]}</h1>
+      <p className="mt-4 text-muted">{de.danke.texts[status]}</p>
       <Link href="/" className="mt-8 inline-block text-accent underline">
         {de.danke.home}
       </Link>

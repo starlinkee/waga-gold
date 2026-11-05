@@ -20,6 +20,7 @@ async function complete(formData: FormData) {
     customerEmail: "test@example.com",
     customerName: "Test Kunde",
     shippingAddress: "Teststraße 1, 1010 Wien, AT",
+    isTest: true,
   });
   redirect(`/danke?session_id=${id}`);
 }

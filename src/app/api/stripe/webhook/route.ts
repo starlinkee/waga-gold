@@ -13,8 +13,23 @@ export async function POST(req: Request) {
     return new Response("Bad Request", { status: 400 });
   }
 
-  if (event.type === "checkout.session.completed") {
-    await handleCheckoutCompleted(orderFromSession(event.data.object));
+  // Powiadomienie o zamówieniu tylko dla opłaconej sesji (payment_status === "paid").
+  // completed + unpaid (opóźnione metody, np. SEPA) czeka na async_payment_succeeded.
+  let notified = false;
+  switch (event.type) {
+    case "checkout.session.completed":
+    case "checkout.session.async_payment_succeeded": {
+      const session = event.data.object;
+      if (session.payment_status === "paid") {
+        notified = await handleCheckoutCompleted(orderFromSession(session));
+      } else {
+        console.info("[order] payment pending, no notification", session.id);
+      }
+      break;
+    }
+    case "checkout.session.async_payment_failed":
+      console.info("[order] async payment failed", event.data.object.id);
+      break;
   }
-  return Response.json({ received: true });
+  return Response.json({ received: true, notified });
 }

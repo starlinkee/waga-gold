@@ -20,10 +20,12 @@ export function orderFromSession(s: Stripe.Checkout.Session): Order {
 }
 
 // Wspólna ścieżka: webhook i mock. Błąd powiadomienia nie wywraca wywołania.
-export async function handleCheckoutCompleted(order: Order): Promise<void> {
+export async function handleCheckoutCompleted(order: Order): Promise<boolean> {
   try {
     await getNotifier().notifyOwner(order);
+    return true;
   } catch (err) {
     console.error("[order-notification] failed", err instanceof Error ? err.message : "unknown");
+    return false;
   }
 }
