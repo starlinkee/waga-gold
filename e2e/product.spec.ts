@@ -8,7 +8,7 @@ test("Produktseite: alle Abschnitte, CTA, Spezifikation, FAQ, Versand", async ({
   await expect(heroImg).toBeVisible();
   expect(await heroImg.getAttribute("alt")).toMatch(/.+/);
 
-  for (const name of ["Vorteile", "Spezifikation", "Lieferumfang", "Galerie", "FAQ", "Versand & Rückgabe", "Jetzt bestellen"]) {
+  for (const name of ["Warum ein Magnettest?", "Vorteile", "Messprinzip", "Spezifikation", "Lieferumfang", "Galerie", "Jetzt bestellen", "FAQ", "Sicherheit", "Versand & Rückgabe", "Kontakt"]) {
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
   }
 
@@ -59,7 +59,7 @@ test("kein TODO_SPEC im HTML, Platzhalter als 'Angabe folgt'", async ({ page }) 
   const res = await page.goto("/");
   const html = await res!.text();
   expect(html).not.toContain("TODO_SPEC");
-  await expect(page.getByRole("row", { name: /Wägebereich/ })).toContainText("Angabe folgt");
+  await expect(page.getByRole("row", { name: /Messbereich/ })).toContainText("Angabe folgt");
 });
 
 test("kein horizontales Scrollen (360 px), Bilder laden", async ({ page }) => {

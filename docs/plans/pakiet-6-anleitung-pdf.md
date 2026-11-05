@@ -1,0 +1,37 @@
+# Pakiet 6 — instrukcja PDF (DE), link na stronie, README (plan)
+
+Źródło: `docs/BRIEF-2-magnetwaage.md` (zadania B, C + dodatek „łatwy podgląd instrukcji”), qitem-20261105160340-5a0c5aff6c09093c. Bazuje na pakiecie 5 (content w `src/content/product.ts`).
+
+## Cel
+Własna instrukcja obsługi po niemiecku (8–12 stron A4) generowana skryptem z repo do `public/downloads/anleitung.pdf`, ze znakiem „ENTWURF” dopóki są `TODO_SPEC`; dobrze widoczny link „Anleitung (PDF)” na stronie (sekcja zestawu/specyfikacji + stopka), otwierany inline w nowej karcie pod stałym adresem `/downloads/anleitung.pdf`; README z checklistą dla manuala i uprawnień.
+
+## Założenia
+- Treść: **własne słowa**, bez kopiowania instrukcji producenta (© MARAWE), bez ich grafik, logo, nazw marek i zdjęć. `/tmp/claude-1000/ga/anleitung.pdf` i `de.txt` tylko do lektury, nie do repo. Nasze zdjęcia z `public/images/` wolno użyć.
+- Fakty, ograniczenia i ostrzeżenia **z `src/content/product.ts`** (jedno źródło z pakietu 5) — PDF i strona nie mogą się rozjechać. Wszystkie ostrzeżenia z briefu muszą być w rozdziale 2.
+- To **nasz własny produkt pod własną marką** (aktualizacja właściciela): w PDF ani śladu innego producenta, bez porównań i „Referenzgerät”. Stopka/„Hersteller” = `siteConfig.brandName`, dane kontaktowe = `TODO_SPEC`. Deklaracje niezmierzone na naszym urządzeniu (wolfram, tantal, 3 mm, 250 g, blister/kapsuła) = `TODO_SPEC` lub ostrożnie z dopiskiem „durch Messungen zu bestätigen”. CE/certyfikaty tylko po potwierdzeniu właściciela (domyślnie brak). W PDF `TODO_SPEC` renderuj jako widoczne „[zu ergänzen]” (to wersja robocza z ENTWURF — tu inaczej niż na stronie, celowo).
+- Tylko DE. Bez certyfikatów (CE itp.).
+- Chromium Playwrighta jest zainstalowany (`~/.cache/ms-playwright/chromium-1248`).
+
+## Kroki
+1. **Źródło instrukcji**: `docs/anleitung/` lub `scripts/anleitung/` — szablon HTML/TSX + CSS druku (A4, marginesy, numeracja stron w stopce, ciemny nagłówek w stylu strony, liczby w Geist Mono, tekst czytelny do druku — jasne tło treści, ciemny tylko nagłówek/okładka), treść z `src/content/product.ts` + osobny `src/content/anleitung.ts` dla tekstów tylko instrukcji. Znak wodny „ENTWURF” na każdej stronie, sterowany jedną flagą (`ANLEITUNG_DRAFT`, domyślnie `true` dopóki w treści są `TODO_SPEC` — najlepiej liczone automatycznie).
+2. **Rozdziały** (wg briefu): okładka (marka z configu, tytuł „Bedienungsanleitung – Magnetwaage zur Echtheitsprüfung”, wersja/data), Inhaltsverzeichnis; 1 Einführung (cel, zasada w skrócie, **ważne: test magnetyczny nigdy jako jedyna metoda**); 2 Sicherheitshinweise (magnes, spray, akumulator, miejsce pracy, czyszczenie — wszystkie ostrzeżenia); 3 Lieferumfang (z naszych zdjęć + TODO; można wstawić zdjęcie `koffer-inhalt-oben.jpeg`); 4 Bedienelemente (⏻, M, P, T — funkcje M/P/T `TODO_SPEC`, ⏻ = Ein/Aus); 5 Inbetriebnahme und Messung (ustawienie na stabilnym, poziomym podłożu bez drgań i przeciągów, z dala od metali/magnesów, włączenie, zerowanie/Tara, umieszczenie próbki — także w blistrze/kapsule „zu bestätigen”, odczyt, interpretacja: dodatni = diamagnetyczny, lekko ujemny = paramagnetyczny, silnie ujemny = ferromagnetyczny, + tabela przykładów; konkretne kroki zależne od urządzenia = `TODO_SPEC`); 6 Fehlersuche (ogólne przyczyny niestabilnego odczytu; kody błędów tylko jako `TODO_SPEC`); 7 Pflege, Lagerung, Entsorgung (ogólne: sucho, w walizce, magnes osobno od elektroniki; utylizacja elektroniki i akumulatora wg przepisów — bez numerów rejestrowych, TODO jeśli potrzebne); 8 Kontakt (odesłanie do Impressum na stronie, dane `TODO_SPEC`).
+3. **Generator**: `scripts/build-anleitung.ts` (lub `.mjs`) — renderuje HTML i drukuje Playwright `page.pdf({ format: "A4", printBackground: true, displayHeaderFooter: true, ... })` do `public/downloads/anleitung.pdf`. Skrypt `npm run build:anleitung`. PDF **commitowany** do repo (Vercel nie musi go generować). Nie podpinaj generatora do `npm run build` (Chromium na Vercelu). Docelowo 8–12 stron; rozmiar rozsądny (< ~3 MB — zdjęcia skompresowane).
+4. **Link na stronie**: przycisk „Anleitung (PDF)” w sekcji Lieferumfang lub Spezifikation i link w stopce; `href="/downloads/anleitung.pdf"`, `target="_blank"`, `rel="noopener"`, **bez** atrybutu `download` (otwarcie inline). Tekst z `de.ts`. Dodaj ikonę/oznaczenie „PDF”. Upewnij się, że `public/downloads/anleitung.pdf` serwowany jest z `Content-Type: application/pdf` i bez `Content-Disposition: attachment` (domyślne Next/Vercel to spełnia; nie dodawaj nagłówków, które wymuszają pobranie). Dodaj do sitemap tylko, jeśli ma sens (opcjonalnie); `robots` nie blokuje.
+5. **README** (zadanie C): nowa sekcja „Bedienungsanleitung (PDF)”: jak wygenerować (`npm run build:anleitung`), gdzie jest źródło, jak zdjąć ENTWURF; checklista `TODO_SPEC` dla manuala (funkcje M/P/T, kierunek znaku odczytu, max. masa próbki, głębokość, pomiar przez blister/kapsułę, magnes, zasilanie/akumulator, zawartość zestawu: spray/płyta grafitowa/magnes sztabkowy/zasilacz?, kalibracja, kody błędów, utylizacja, kontakt); **zastrzeżenie (zamiast uprawnień reselera — aktualizacja właściciela)**: wszystkie parametry i deklaracje (zakres/max. masa, głębokość penetracji, wykrywane fałszerstwa: wolfram, tantal itd.) pochodzą ze strony innego producenta i właściciel musi je potwierdzić pomiarami **naszego** urządzenia, zanim zdejmie TODO/ENTWURF; CE i inne certyfikaty tylko po potwierdzeniu; teksty są własne — nie wklejać materiałów innych producentów. Zaktualizuj też istniejącą checklistę o nowe `TODO_SPEC` z pakietu 5. Wygeneruj listę z kodu (`grep -rn TODO src scripts`), nie z pamięci.
+6. **Testy e2e** `e2e/anleitung.spec.ts`:
+   - główna ścieżka: na `/` link „Anleitung (PDF)” widoczny w sekcji zestawu/specyfikacji i w stopce (desktop i mobile), ma `href="/downloads/anleitung.pdf"`, `target="_blank"`, brak `download`; kliknięcie otwiera nową kartę (`context.waitForEvent("page")`) z URL `/downloads/anleitung.pdf`; `request.get("/downloads/anleitung.pdf")` → 200, `content-type` zawiera `application/pdf`, brak `content-disposition: attachment`, body zaczyna się od `%PDF-`, rozmiar > 50 kB i < 5 MB;
+   - regresja/błąd: PDF nie zawiera „MagneticScreenScale”/„Goldanalytix”/„MARAWE” (sprawdzenie tekstu: np. `pdf-parse`/`pdfjs-dist` jako devDependency albo test na źródle HTML generatora — wybór buildera) i zawiera „ENTWURF” oraz „Herzschrittmacher”; `/downloads/nie-ma.pdf` → 404.
+   - Test (lub skrypt CI) sprawdzający, że commitowany PDF jest aktualny względem źródła — opcjonalnie (np. hash źródła w metadanych PDF); jeśli pominięte, zapisz w README „po zmianie treści uruchom `npm run build:anleitung`”.
+7. Commit lokalny po zielonych testach (bez push), z tym planem i wygenerowanym PDF.
+
+## Weryfikacja
+- `npm run build:anleitung` działa lokalnie; PDF ma 8–12 stron (podaj liczbę), znak ENTWURF, spis treści, 8 rozdziałów.
+- `npm run lint`, `npm run build`, `npm run test:e2e` (desktop + mobile) — zielone.
+- `grep -rniE "magneticscreenscale|goldanalytix|marawe" src public scripts e2e README.md` → pusto (README mówi tylko „innego producenta”, bez nazwy).
+- Reviewer porównuje ostrzeżenia w PDF z listą z briefu 1:1 i ocenia, czy tekst nie jest parafrazą 1:1 instrukcji producenta.
+
+## Poza zakresem
+Wersje EN/ES/FR, deploy/push, nowe zdjęcia, zmiany checkoutu.
+
+## Handoff
+Builder → `review-reviewer@waga-gold-conveyor` z wynikami komend, liczbą stron PDF, rozmiarem pliku i listą `TODO_SPEC` manuala. Po akceptacji: brief 2 zamknięty.

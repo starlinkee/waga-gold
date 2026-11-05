@@ -10,11 +10,9 @@ export function Hero() {
     <section className="border-b border-border">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-20">
         <div>
-          <h1 className="font-mono text-4xl font-semibold tracking-widest text-accent sm:text-6xl">
-            {siteConfig.brandName}
-          </h1>
-          <p className="mt-4 text-xl text-fg">{de.hero.tagline}</p>
-          <p className="mt-2 max-w-md text-muted">{de.hero.sub}</p>
+          <p className="font-mono text-sm tracking-widest text-accent">{siteConfig.brandName}</p>
+          <h1 className="mt-3 text-3xl font-semibold leading-tight sm:text-5xl">{de.hero.title}</h1>
+          <p className="mt-4 max-w-md text-muted">{de.hero.sub}</p>
           <div className="mt-8">
             <LcdCounter />
           </div>

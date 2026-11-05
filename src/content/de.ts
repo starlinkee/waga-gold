@@ -5,8 +5,9 @@ const price = siteConfig.price.display;
 
 export const seo = {
   description:
-    "Präzisionswaage mit beleuchtetem LCD (Anzeige in 0,001 g) im Hartschalenkoffer. Lieferung nur nach Österreich.",
-  ogAlt: "Präzisionswaage mit beleuchtetem LCD-Display",
+    "Magnetwaage zur zerstörungsfreien Echtheitsprüfung von Münzen und Barren aus Gold, Silber, Platin und Palladium. Lieferung nur nach Österreich.",
+  ogAlt: "Magnetwaage mit beleuchtetem LCD-Display zur Echtheitsprüfung",
+  productName: "Magnetwaage zur Echtheitsprüfung",
 } as const;
 
 export const de = {
@@ -17,25 +18,26 @@ export const de = {
     home: "Startseite",
     links: [
       { href: "#vorteile", label: "Vorteile" },
-      { href: "#spezifikation", label: "Spezifikation" },
+      { href: "#messprinzip", label: "Messprinzip" },
       { href: "#lieferumfang", label: "Lieferumfang" },
       { href: "#faq", label: "FAQ" },
     ],
   },
   hero: {
-    tagline: "Präzision, die man spürt.",
-    sub: "Eine Waage mit beleuchtetem LCD – verstaut im Hartschalenkoffer.",
+    title: "Gold und Silber magnetisch auf Echtheit prüfen",
+    sub: "Zerstörungsfreier Vorabtest für Münzen und Barren – ein Hinweis, kein Beweis.",
     priceLabel: "Preis",
     lcdLabel: "Anzeige",
   },
-  vorteile: {
-    title: "Vorteile",
-    items: [
-      { title: "Präzision", text: "Die Anzeige löst auf drei Nachkommastellen auf – ablesbar im beleuchteten LCD." },
-      { title: "Stabilität", text: "Die Abdeckung schützt die Wägefläche vor äußeren Einflüssen." },
-      { title: "Zuverlässigkeit", text: "Im Hartschalenkoffer mit Schaumstoffeinlage sicher verstaut und transportiert." },
+  intro: {
+    title: "Warum ein Magnettest?",
+    paragraphs: [
+      "Fälschungen sind oft von außen kaum zu erkennen. Manche Barren und Münzen haben einen Kern aus einem anderen Metall, etwa Wolfram, und sehen trotzdem überzeugend aus.",
+      "Die Magnetwaage zeigt, wie sich ein Stück im Magnetfeld verhält. So lassen sich magnetisch auffällige Beimischungen schnell sichtbar machen, ohne die Probe zu beschädigen.",
     ],
   },
+  vorteile: { title: "Vorteile", limitsTitle: "Grenzen der Methode" },
+  messprinzip: { title: "Messprinzip", example: "Beispiel" },
   spec: {
     title: "Spezifikation",
     note: "Hinweis: Die Auflösung der Anzeige ist keine Aussage über die Genauigkeit.",
@@ -44,15 +46,51 @@ export const de = {
   },
   lieferumfang: { title: "Lieferumfang" },
   galerie: { title: "Galerie" },
+  sicherheit: { title: "Sicherheit", intro: "Bitte vor der Benutzung lesen." },
+  kontakt: {
+    title: "Kontakt",
+    text: "Fragen zum Gerät oder zur Bestellung? Unsere Kontaktdaten finden Sie im",
+    impressum: "Impressum",
+    email: "E-Mail",
+    phone: "Telefon",
+  },
   faq: {
     title: "FAQ",
     items: [
+      {
+        q: "Kann ein Test positiv ausfallen, obwohl das Stück gefälscht ist?",
+        a: "Ja. Nicht jede Fälschung enthält magnetisch auffällige Materialien. Deshalb ersetzt der Magnettest nie eine zweite Prüfmethode, zum Beispiel eine Dichtemessung.",
+      },
+      {
+        q: "Eignet sich das Gerät für Schmuck?",
+        a: "Nein, für Schmuck ist das Gerät nicht geeignet.",
+      },
+      {
+        q: "Warum reicht ein normaler Magnet nicht?",
+        a: "Ein Handmagnet zeigt nur starke Anziehung. Die feinen Unterschiede zwischen diamagnetischen und schwach paramagnetischen Materialien zeigen sich erst als Veränderung der Anzeige einer Waage.",
+      },
+      {
+        q: "Wie lese ich das Ergebnis?",
+        a: "Gold und Silber sind diamagnetisch, die Anzeige ändert sich nur gering. Paramagnetische und ferromagnetische Materialien ziehen die Anzeige in die Gegenrichtung, ferromagnetische besonders stark. Konkrete Grenzwerte: Angabe folgt.",
+      },
+      {
+        q: "Analysiert das Gerät die Legierung?",
+        a: "Nein. Es bestimmt weder Feingehalt noch Zusammensetzung, sondern zeigt nur das magnetische Verhalten.",
+      },
+      {
+        q: "Was kann die Messung beeinflussen?",
+        a: "Erschütterungen, Zugluft, ein unebener Untergrund sowie magnetische oder metallische Gegenstände in der Nähe können die Anzeige verfälschen. Messen Sie ruhig, eben und mit Abstand zu anderen Gegenständen.",
+      },
+      {
+        q: "Welche Sicherheitshinweise gelten?",
+        a: "Der Magnet ist stark: nicht für Personen mit Herzschrittmacher, Quetschgefahr, spröde, nicht für Kinder. Alle Hinweise stehen im Abschnitt Sicherheit.",
+      },
       { q: "In welche Länder liefern Sie?", a: "Derzeit liefern wir nur nach Österreich." },
-      { q: "Was kostet die Waage?", a: `${price} inklusive MwSt.` },
-      { q: "Wie wird die Waage mit Strom versorgt?", a: "Über USB. Das Kabel ist im Lieferumfang enthalten." },
-      { q: "Was ist im Lieferumfang enthalten?", a: "Waage, Abdeckung, Kalibriergewicht, USB-Kabel und Hartschalenkoffer." },
-      { q: "Was ist der Wägebereich?", a: "TODO_SPEC" },
-      { q: "Wie wird die Waage kalibriert?", a: "TODO_SPEC" },
+      { q: "Was kostet das Gerät?", a: `${price} inklusive MwSt.` },
+      { q: "Wie wird das Gerät mit Strom versorgt?", a: "Ein USB-Kabel liegt bei. Weitere Angaben zur Stromversorgung: TODO_SPEC" },
+      { q: "Was ist im Lieferumfang enthalten?", a: "Waage mit LCD, Messaufsatz, Zylinder, USB-Kabel und Hartschalenkoffer." },
+      { q: "Wie groß darf eine Probe sein?", a: "TODO_SPEC" },
+      { q: "Wie tief misst das Gerät in die Probe?", a: "TODO_SPEC" },
       { q: "Gibt es eine Garantie?", a: "TODO_SPEC" },
     ],
   },

@@ -25,7 +25,8 @@ export default function Image() {
         <div style={{ fontSize: 96, letterSpacing: 12, color: "#9fe3ff", fontFamily: "monospace" }}>
           {siteConfig.brandName}
         </div>
-        <div style={{ fontSize: 120, marginTop: 40, color: "#9fe3ff", fontFamily: "monospace" }}>0.000 g</div>
+        <div style={{ fontSize: 56, marginTop: 40 }}>{seo.productName}</div>
+        <div style={{ fontSize: 120, marginTop: 20, color: "#9fe3ff", fontFamily: "monospace" }}>0.000 g</div>
         <div style={{ fontSize: 48, marginTop: 40 }}>{siteConfig.price.display}</div>
       </div>
     ),

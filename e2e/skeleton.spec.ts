@@ -12,7 +12,8 @@ test("Startseite: Marke, Preis, Header, Footer", async ({ page }) => {
   const res = await page.goto("/");
   expect(res?.status()).toBe(200);
   await expect(page.locator("html")).toHaveAttribute("lang", "de-AT");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(siteConfig.brandName);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Echtheit");
+  await expect(page.locator("header")).toContainText(siteConfig.brandName);
   await expect(page.getByTestId("price")).toHaveText("499 €");
   await expect(page.locator("header")).toBeVisible();
   await expect(page.locator("footer")).toBeVisible();

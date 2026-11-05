@@ -2,6 +2,7 @@ import Image from "next/image";
 import { de } from "@/content/de";
 import { images, imageH, imageW } from "@/content/images";
 import { kit } from "@/content/kit";
+import { displayValue } from "@/content/spec";
 
 export function Lieferumfang() {
   return (
@@ -10,7 +11,12 @@ export function Lieferumfang() {
       <div className="mt-8 grid items-center gap-8 md:grid-cols-2">
         <ul className="space-y-3">
           {kit.map((k) => (
-            <li key={k} className="rounded border border-border bg-surface px-4 py-3">{k}</li>
+            <li key={k.name} className="rounded border border-border bg-surface px-4 py-3">
+              {k.name}
+              {k.note ? (
+                <span className="text-muted"> – Funktion: {displayValue(k.note)}</span>
+              ) : null}
+            </li>
           ))}
         </ul>
         <div className="relative aspect-[4/3] overflow-hidden rounded border border-border">

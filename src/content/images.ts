@@ -2,17 +2,17 @@
 export const images = {
   hero: {
     src: "/images/koffer-display-0000.jpeg",
-    alt: "Präzisionswaage mit beleuchtetem LCD-Display, das 0.000 g anzeigt",
+    alt: "Magnetwaage mit beleuchtetem LCD-Display, das 0.000 g anzeigt",
     position: "50% 66%",
   },
   coin: {
     src: "/images/koffer-muenze.jpeg",
-    alt: "Münze in einer Kapsel auf der Waagen-Abdeckung",
+    alt: "Münze in einer Kapsel auf dem schwarzen Messaufsatz",
     position: "50% 50%",
   },
   top: {
     src: "/images/koffer-inhalt-oben.jpeg",
-    alt: "Offener Hartschalenkoffer von oben mit Waage, Abdeckung, Gewicht und USB-Kabel",
+    alt: "Offener Hartschalenkoffer von oben mit Waage, Messaufsatz, Zylinder und USB-Kabel",
     position: "50% 71%",
   },
   angled: {
