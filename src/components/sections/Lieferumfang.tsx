@@ -18,6 +18,18 @@ export function Lieferumfang() {
               ) : null}
             </li>
           ))}
+          <li>
+            <a
+              href={de.anleitung.href}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 rounded border border-accent px-4 py-3 text-accent hover:bg-surface"
+            >
+              <span className="rounded bg-accent px-1.5 py-0.5 font-mono text-xs text-bg">PDF</span>
+              {de.anleitung.label}
+              <span className="sr-only"> ({de.anleitung.hint})</span>
+            </a>
+          </li>
         </ul>
         <div className="relative aspect-[4/3] overflow-hidden rounded border border-border">
           <Image

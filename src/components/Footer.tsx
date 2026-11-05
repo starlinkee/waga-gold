@@ -13,6 +13,9 @@ export function Footer() {
             {l.label}
           </Link>
         ))}
+        <a href={de.anleitung.href} target="_blank" rel="noopener" className="hover:text-accent">
+          {de.anleitung.label}
+        </a>
       </nav>
     </footer>
   );

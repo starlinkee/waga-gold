@@ -45,6 +45,7 @@ export const de = {
     valueHeader: "Wert",
   },
   lieferumfang: { title: "Lieferumfang" },
+  anleitung: { label: "Anleitung (PDF)", hint: "Bedienungsanleitung als PDF, öffnet in neuer Registerkarte", href: "/downloads/anleitung.pdf" },
   galerie: { title: "Galerie" },
   sicherheit: { title: "Sicherheit", intro: "Bitte vor der Benutzung lesen." },
   kontakt: {

@@ -46,6 +46,33 @@ Lista z `grep -rn TODO src`.
 
 **Zależności:** `npm audit` pokazuje 8 podatności *moderate*, wyłącznie w łańcuchu dev (`eslint` / `typescript-eslint` / `minimatch`); `npm audit --omit=dev` = 0. Naprawa wymaga `npm audit fix --force` (breaking changes) – do decyzji, nie ruszane.
 
+## Bedienungsanleitung (PDF)
+
+Własna instrukcja po niemiecku (A4), generowana z kodu do `public/downloads/anleitung.pdf` (**commitowany**, serwowany inline pod stałym adresem `/downloads/anleitung.pdf`; linki: sekcja Lieferumfang i stopka).
+
+- Generowanie: `npm run build:anleitung` (Playwright Chromium, nie jest częścią `npm run build`). **Po każdej zmianie treści uruchom to polecenie i skommituj nowy PDF.**
+- Źródło: `scripts/build-anleitung.mjs` (szablon + CSS druku), teksty tylko instrukcji `src/content/anleitung.ts`, fakty i ostrzeżenia ze wspólnego `src/content/product.ts` (to samo źródło co strona).
+- Znak „ENTWURF” (znak wodny + stopka) włącza się automatycznie, dopóki w treści jest `TODO_SPEC` (renderowane jako „[zu ergänzen]”). Wymuszenie: `ANLEITUNG_DRAFT=0|1 npm run build:anleitung`. Aby zdjąć ENTWURF: uzupełnij wszystkie `TODO_SPEC` w `anleitung.ts` i wygeneruj PDF ponownie.
+- Test e2e (`e2e/anleitung.spec.ts`) sprawdza link, nagłówki odpowiedzi, liczbę stron (8–12) i tekst commitowanego PDF; nie sprawdza, czy PDF jest aktualny względem źródła.
+
+**Zastrzeżenie:** wszystkie parametry i deklaracje (zakres/max. masa próbki, głębokość penetracji, wykrywanie fałszerstw: wolfram, tantal itd., pomiar przez blister/kapsułę) pochodziły ze strony innego producenta. Właściciel musi je potwierdzić pomiarami **naszego** urządzenia, zanim zdejmie `TODO_SPEC`/ENTWURF. CE i inne certyfikaty tylko po potwierdzeniu przez właściciela. Teksty są własne – nie wklejać materiałów innych producentów.
+
+**Checklista manuala (`TODO_SPEC`, `grep -rn TODO_SPEC src scripts`):**
+- [ ] funkcje przycisków M / P / T i sposób tarowania/zerowania (`anleitung.ts`: bedienelemente, messung)
+- [ ] kierunek znaku odczytu (+ dla Au/Ag, − dla Wolfram/Tantal/ferro) – potwierdzić pomiarem (`product.ts`, `anleitung.ts`)
+- [ ] maksymalna masa próbki i głębokość penetracji (`anleitung.ts`, `spec.ts`, FAQ w `de.ts`)
+- [ ] pomiar przez blister/kapsułę (`anleitung.ts`, `product.ts` → `unverifiedSpecs`)
+- [ ] deklaracje: wolfram w sztabkach/monetach, tantal w monetach 900/916 (`product.ts` → `unverifiedSpecs`)
+- [ ] rodzaj magnesu, zasilanie/akumulator (NiMH?), czas pracy (`spec.ts`, `product.ts`)
+- [ ] zawartość zestawu: spray, płyta grafitowa, magnes sztabkowy, zasilacz, instrukcja; funkcja „Würfel” i „Zylinder” (`kit.ts`, `anleitung.ts`)
+- [ ] kalibracja, kody błędów wyświetlacza (`anleitung.ts`)
+- [ ] utylizacja / rejestracje odbioru elektrośmieci (`anleitung.ts`)
+- [ ] dane kontaktowe producenta: e-mail, telefon, adres (`anleitung.ts`, `Kontakt.tsx`)
+
+**Z review pakietu 5:**
+- [ ] ogólne zdania o skuteczności bez liczb (Intro „magnetisch auffällige Beimischungen schnell sichtbar machen”, Vorteile „…die ein Handmagnet nicht zeigt”) potwierdzić pomiarem na naszym egzemplarzu (np. moneta z rdzeniem W, próbka Ta)
+- [ ] powtórzyć Lighthouse po deployu (strona dłuższa, nowy SVG)
+
 ## Przed włączeniem sprzedaży
 
 1. **Ścieżka prawdziwego Stripe nie była testowana na żywo** (budowa bez kluczy; e2e działają tylko na mocku). Przetestuj z kluczami *testowymi*: `stripe listen --forward-to localhost:3000/api/stripe/webhook` albo endpoint na preview Vercela – checkout, strona `/danke`, webhook, mail z Resend. Dopiero potem klucze live.
