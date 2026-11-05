@@ -12,6 +12,7 @@ const p = (...a) => resolve(root, ...a);
 const A = await import("../src/content/anleitung.ts");
 const P = await import("../src/content/product.ts");
 const { siteConfig } = await import("../src/config/site.ts");
+const { images } = await import("../src/content/images.ts");
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const MISSING = '<span class="todo">[zu ergänzen]</span>';
@@ -25,6 +26,8 @@ const bodyHasTodo = JSON.stringify([A.lieferumfang, A.bedienelemente, A.messung,
 const DRAFT = process.env.ANLEITUNG_DRAFT ? process.env.ANLEITUNG_DRAFT !== "0" : bodyHasTodo;
 
 const img = (f) => `data:image/jpeg;base64,${readFileSync(p("public/images", f)).toString("base64")}`;
+// Kadr (object-position) z images.ts, to samo źródło co strona.
+const pos = (key) => images[key].position;
 const fontCss = (name, file, weight) =>
   `@font-face{font-family:"${name}";font-weight:${weight};src:url(data:font/woff2;base64,${readFileSync(p("node_modules/geist/dist/fonts", file)).toString("base64")}) format("woff2");}`;
 
@@ -85,7 +88,7 @@ th,td{border:1px solid #cdd2d9;padding:2mm 3mm;text-align:left;vertical-align:to
 th{background:#eef1f4}
 .todo{color:#b45309;font-weight:600;background:#fef3c7;padding:0 1mm}
 figure{margin:4mm 0;break-inside:avoid}
-figure img{width:100%;max-height:60mm;object-fit:cover;border:1px solid #cdd2d9}
+figure img{width:100%;max-height:80mm;object-fit:cover;border:1px solid #cdd2d9}
 figcaption{font-size:9pt;color:#4b5563}
 .wm{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:50}
 .wm span{font-size:110pt;font-weight:600;color:rgba(215,38,46,.10);transform:rotate(-35deg);letter-spacing:.1em}
@@ -104,9 +107,9 @@ ${ch(2, K[1], `<div class="callout">Lesen Sie diese Hinweise vor der ersten Benu
 <h3>Arbeitsplatz</h3>${li(["Arbeiten Sie auf einer freien, stabilen Fläche. Keine anderen Magnete und keine losen Metallteile in Reichweite.", "Magnet und Messaufsatz nie ruckartig bewegen oder zusammenschnappen lassen.", "Kinder und Personen mit Herzschrittmacher fernhalten."])}
 <h3>Reinigung</h3>${li(["Nur trocken reinigen, Gerät vorher ausschalten und vom Strom trennen.", "Keine Spraydosen oder Flüssigkeiten auf Elektronik und Magnet."])}`)}
 ${ch(3, K[2], `<p>${esc(A.lieferumfang.intro)}</p><table><tr><th>Teil</th><th>Funktion</th></tr>${A.lieferumfang.items.map((i) => `<tr><td>${esc(i.name)}</td><td>${i.note ? fill(i.note) : "–"}</td></tr>`).join("")}</table>
-<figure><img src="${img("koffer-inhalt-oben.jpeg")}" alt=""><figcaption>Geöffneter Koffer mit Waage, Messaufsatz, Zylinder und USB-Kabel.</figcaption></figure><p>${fill(A.lieferumfang.offen)}</p>`)}
+<figure><img src="${img("koffer-inhalt-oben.jpeg")}" alt="" style="object-position:${pos("top")};height:80mm"><figcaption>Geöffneter Koffer mit Waage, Messaufsatz, Zylinder und USB-Kabel.</figcaption></figure><p>${fill(A.lieferumfang.offen)}</p>`)}
 ${ch(4, K[3], `<p>${esc(A.bedienelemente.intro)}</p><table><tr><th>Taste</th><th>Funktion</th></tr>${A.bedienelemente.rows.map((r) => `<tr><td class="mono">${esc(r.key)}</td><td>${fill(r.func)}</td></tr>`).join("")}</table>
-<figure><img src="${img("koffer-display-0000-crop.jpeg")}" alt=""><figcaption>Beleuchtetes LCD im Ruhezustand: 0.000 g.</figcaption></figure><p>${esc(A.bedienelemente.display)}</p>`)}
+<figure><img src="${img("koffer-display-0000-crop.jpeg")}" alt="" style="object-position:50% 50%"><figcaption>Beleuchtetes LCD im Ruhezustand: 0.000 g.</figcaption></figure><p>${esc(A.bedienelemente.display)}</p>`)}
 ${ch(5, K[4], `<h3>Schritt für Schritt</h3><ol>${A.messung.steps.map((s) => `<li>${fill(s)}</li>`).join("")}</ol>
 <p>${fill(A.messung.kapsel)}</p><p>${fill(A.messung.masse)}</p>
 <h3>Anzeige deuten</h3><p>${esc(A.messung.deutenIntro)}</p>
