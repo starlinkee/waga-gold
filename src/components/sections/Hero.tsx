@@ -2,6 +2,7 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { de } from "@/content/de";
 import { images, imageH, imageW } from "@/content/images";
+import { BuyForm } from "@/components/BuyForm";
 import { LcdCounter } from "@/components/LcdCounter";
 
 export function Hero() {
@@ -21,12 +22,7 @@ export function Hero() {
             <span className="text-muted">{de.hero.priceLabel}: </span>
             <span data-testid="price">{siteConfig.price.display}</span>
           </p>
-          <a
-            href="#kaufen"
-            className="mt-6 inline-block rounded bg-cta px-6 py-3 font-semibold text-cta-fg"
-          >
-            {de.nav.buy}
-          </a>
+          <BuyForm className="mt-6" />
         </div>
         {/* Zdjęcie jako osobny kadr (nie pod tekstem), kadr na wyświetlaczu wagi. */}
         <div className="relative aspect-[4/3] overflow-hidden rounded border border-border">

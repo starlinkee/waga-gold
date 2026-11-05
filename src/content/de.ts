@@ -62,6 +62,29 @@ export const de = {
     priceLabel: "Preis",
     vat: "inkl. MwSt.",
   },
+  checkout: {
+    mockBanner: "TESTMODUS – keine echte Zahlung",
+    mockTitle: "Testkasse",
+    mockAmountLabel: "Betrag",
+    mockAmount: "499,00 €",
+    mockShipping: "Lieferung nur nach Österreich",
+    mockComplete: "Testzahlung abschließen",
+    mockCancel: "Abbrechen",
+  },
+  danke: {
+    title: "Danke für Ihre Bestellung",
+    text: "Ihre Zahlung ist eingegangen. Wir melden uns mit weiteren Informationen zum Versand.",
+    none: "Keine Bestellung gefunden",
+    noneText: "Zu diesem Link liegt keine bezahlte Bestellung vor.",
+    home: "Zur Startseite",
+  },
+  abgebrochen: {
+    title: "Zahlung abgebrochen",
+    text: "Zahlung abgebrochen – es wurde nichts berechnet.",
+    error: "Zahlung derzeit nicht möglich",
+    retry: "Erneut kaufen",
+    home: "Zur Startseite",
+  },
   footer: {
     legal: [
       { href: "/impressum", label: "Impressum" },

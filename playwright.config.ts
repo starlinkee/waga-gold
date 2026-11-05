@@ -12,6 +12,13 @@ export default defineConfig({
   webServer: {
     command: "npm run build && npm run start",
     url: "http://localhost:3000",
+    env: {
+      STRIPE_MOCK: "1",
+      STRIPE_WEBHOOK_SECRET: "whsec_e2e_dummy",
+      STRIPE_SECRET_KEY: "",
+      RESEND_API_KEY: "",
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3000",
+    },
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },
