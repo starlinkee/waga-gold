@@ -25,6 +25,11 @@ test("Produktseite: alle Abschnitte, CTA, Spezifikation, FAQ, Versand", async ({
   await item.locator("summary").click();
   await expect(item.getByText("Derzeit liefern wir nur nach Österreich.")).toBeVisible();
 
+  // Bedienung: kein nicht darstellbares Symbol (Geist hat kein ⏻)
+  const bedienung = page.getByRole("row", { name: /Bedienung/ });
+  await expect(bedienung).toContainText("Ein/Aus");
+  await expect(bedienung).not.toContainText("⏻");
+
   // Versand nur Österreich
   await expect(page.locator("#versand")).toContainText("Österreich");
 

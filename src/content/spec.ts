@@ -12,7 +12,7 @@ export const specRows: SpecRow[] = [
   { label: "Anzeige", value: "LCD, beleuchtet" },
   { label: "Einheit", value: "g" },
   { label: "Auflösung der Anzeige", value: "3 Nachkommastellen (0.000 g)" },
-  { label: "Bedienung", value: "4 Tasten: ⏻ M P T" },
+  { label: "Bedienung", value: "4 Tasten: Ein/Aus, M, P, T" },
   { label: "Stromversorgung", value: "USB, Kabel im Lieferumfang" },
   { label: "Aufbewahrung", value: "Hartschalenkoffer mit Schaumstoffeinlage" },
   { label: "Wägebereich", value: TODO_SPEC },

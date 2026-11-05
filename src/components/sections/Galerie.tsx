@@ -18,6 +18,7 @@ export function Galerie() {
               height={imageH}
               sizes="(min-width: 768px) 50vw, 100vw"
               className="h-full w-full object-cover"
+              style={{ objectPosition: img.position }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-bg/60 to-transparent" />
           </div>
