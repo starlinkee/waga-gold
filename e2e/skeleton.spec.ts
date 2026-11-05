@@ -16,7 +16,7 @@ test("Startseite: Marke, Preis, Header, Footer", async ({ page }) => {
   await expect(page.getByTestId("price")).toHaveText("499 €");
   await expect(page.locator("header")).toBeVisible();
   await expect(page.locator("footer")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Jetzt kaufen – 499 €" })).toHaveAttribute("href", "#kaufen");
+  await expect(page.locator("header").getByRole("link", { name: "Jetzt kaufen – 499 €" })).toHaveAttribute("href", "#kaufen");
 });
 
 test("Rechtliche Links im Footer laden", async ({ page }) => {

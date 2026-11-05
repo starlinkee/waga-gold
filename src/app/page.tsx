@@ -1,17 +1,23 @@
-import { siteConfig } from "@/config/site";
-import { de } from "@/content/de";
+import { Hero } from "@/components/sections/Hero";
+import { Vorteile } from "@/components/sections/Vorteile";
+import { Spezifikation } from "@/components/sections/Spezifikation";
+import { Lieferumfang } from "@/components/sections/Lieferumfang";
+import { Galerie } from "@/components/sections/Galerie";
+import { Faq } from "@/components/sections/Faq";
+import { Versand } from "@/components/sections/Versand";
+import { Kaufen } from "@/components/sections/Kaufen";
 
 export default function Home() {
   return (
-    <section id="kaufen" className="mx-auto max-w-6xl px-4 py-24">
-      <h1 className="font-mono text-5xl font-semibold tracking-widest text-accent">
-        {siteConfig.brandName}
-      </h1>
-      <p className="mt-4 text-lg text-muted">{de.hero.tagline}</p>
-      <p className="mt-8 text-2xl">
-        <span className="text-muted">{de.hero.priceLabel}: </span>
-        <span data-testid="price">{siteConfig.price.display}</span>
-      </p>
-    </section>
+    <>
+      <Hero />
+      <Vorteile />
+      <Spezifikation />
+      <Lieferumfang />
+      <Galerie />
+      <Faq />
+      <Versand />
+      <Kaufen />
+    </>
   );
 }
