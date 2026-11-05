@@ -12,8 +12,8 @@ test("Produktseite: alle Abschnitte, CTA, Spezifikation, FAQ, Versand", async ({
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
   }
 
-  // LCD-Zähler endet bei 134.000 g
-  await expect(page.getByTestId("lcd-counter").locator("span")).toHaveText("134.000 g", { timeout: 5000 });
+  // LCD-Zähler beruhigt sich auf 0.000 g
+  await expect(page.getByTestId("lcd-counter").locator("span")).toHaveText("0.000 g", { timeout: 5000 });
 
   // Tabelle: Einheit = g
   const einheit = page.getByRole("row", { name: /Einheit/ });
@@ -40,10 +40,19 @@ test("Produktseite: alle Abschnitte, CTA, Spezifikation, FAQ, Versand", async ({
   await expect(page.getByTestId("buy-price")).toHaveText("499 €");
 });
 
-test("reduced motion: Zähler sofort bei 134.000 g", async ({ page }) => {
+test("reduced motion: Zähler sofort 0.000 g und stabil", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await expect(page.getByTestId("lcd-counter").locator("span")).toHaveText("134.000 g", { timeout: 500 });
+  const lcd = page.getByTestId("lcd-counter").locator("span");
+  await expect(lcd).toHaveText("0.000 g", { timeout: 500 });
+  await page.waitForTimeout(500);
+  await expect(lcd).toHaveText("0.000 g");
+});
+
+test("Auflösung 0,001 g in der Tabelle, nirgends '134'", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("row", { name: /Auflösung/ })).toContainText("0,001 g");
+  expect(await page.locator("body").innerText()).not.toContain("134");
 });
 
 test("kein TODO_SPEC im HTML, Platzhalter als 'Angabe folgt'", async ({ page }) => {

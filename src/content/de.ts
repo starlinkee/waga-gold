@@ -107,5 +107,5 @@ export const de = {
   },
 } as const;
 
-// Wartość końcowa licznika LCD (gramy).
-export const LCD_TARGET = 134;
+// Wartość końcowa licznika LCD (gramy): stan „gotowa”, decyzja właściciela 11-05.
+export const LCD_TARGET = 0;

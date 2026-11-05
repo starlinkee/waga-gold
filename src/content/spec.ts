@@ -11,7 +11,8 @@ export type SpecRow = { label: string; value: string };
 export const specRows: SpecRow[] = [
   { label: "Anzeige", value: "LCD, beleuchtet" },
   { label: "Einheit", value: "g" },
-  { label: "Auflösung der Anzeige", value: "3 Nachkommastellen (0.000 g)" },
+  // TODO: do potwierdzenia przez właściciela (odczytane z wyświetlacza)
+  { label: "Auflösung", value: "0,001 g" },
   { label: "Bedienung", value: "4 Tasten: Ein/Aus, M, P, T" },
   { label: "Stromversorgung", value: "USB, Kabel im Lieferumfang" },
   { label: "Aufbewahrung", value: "Hartschalenkoffer mit Schaumstoffeinlage" },
