@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { de } from "@/content/de";
 import { BuyForm } from "@/components/BuyForm";
@@ -12,6 +13,13 @@ export function Kaufen() {
           <span className="text-base text-muted">{de.kaufen.vat}</span>
         </p>
         <BuyForm className="mt-6" />
+        {/* TODO: Zustimmungsformel (AGB/Widerruf) durch Rechtsberatung; hier nur Links. */}
+        <p className="mt-4 text-sm text-muted">
+          {de.kaufen.legalPrefix}{" "}
+          <Link href="/agb" className="text-accent underline">AGB</Link>
+          {" · "}
+          <Link href="/widerruf" className="text-accent underline">Widerruf</Link>
+        </p>
       </div>
     </section>
   );

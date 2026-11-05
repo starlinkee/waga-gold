@@ -3,8 +3,15 @@ import { siteConfig } from "@/config/site";
 
 const price = siteConfig.price.display;
 
+export const seo = {
+  description:
+    "Präzisionswaage mit beleuchtetem LCD (Anzeige in 0,001 g) im Hartschalenkoffer. Lieferung nur nach Österreich.",
+  ogAlt: "Präzisionswaage mit beleuchtetem LCD-Display",
+} as const;
+
 export const de = {
   todo: "Angabe folgt",
+  skip: "Zum Inhalt",
   nav: {
     buy: `Jetzt kaufen – ${price}`,
     home: "Startseite",
@@ -61,6 +68,7 @@ export const de = {
     title: "Jetzt bestellen",
     priceLabel: "Preis",
     vat: "inkl. MwSt.",
+    legalPrefix: "Siehe auch:",
   },
   checkout: {
     mockBanner: "TESTMODUS – keine echte Zahlung",
@@ -99,7 +107,6 @@ export const de = {
       { href: "/widerruf", label: "Widerruf" },
     ],
   },
-  legalStub: "TODO: Inhalt folgt.",
   notFound: {
     title: "Seite nicht gefunden",
     text: "Diese Seite existiert nicht.",

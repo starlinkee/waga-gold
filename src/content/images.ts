@@ -22,5 +22,12 @@ export const images = {
   },
 } as const;
 
+// Wycinek 4:3 zdjęcia hero (lżejszy LCP); oryginał zostaje w galerii.
+export const heroCrop = {
+  src: "/images/koffer-display-0000-crop.jpeg",
+  width: 1126,
+  height: 845,
+};
+
 export const imageW = 1126;
 export const imageH = 2000;

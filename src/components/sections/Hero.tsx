@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { de } from "@/content/de";
-import { images, imageH, imageW } from "@/content/images";
+import { heroCrop, images } from "@/content/images";
 import { BuyForm } from "@/components/BuyForm";
 import { LcdCounter } from "@/components/LcdCounter";
 
@@ -27,14 +27,14 @@ export function Hero() {
         {/* Zdjęcie jako osobny kadr (nie pod tekstem), kadr na wyświetlaczu wagi. */}
         <div className="relative aspect-[4/3] overflow-hidden rounded border border-border">
           <Image
-            src={images.hero.src}
+            src={heroCrop.src}
             alt={images.hero.alt}
-            width={imageW}
-            height={imageH}
+            width={heroCrop.width}
+            height={heroCrop.height}
             priority
-            sizes="(min-width: 768px) 50vw, 100vw"
+            quality={60}
+            sizes="(min-width: 1152px) 540px, (min-width: 768px) 50vw, calc(100vw - 32px)"
             className="h-full w-full object-cover"
-            style={{ objectPosition: images.hero.position }}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/50 via-transparent to-transparent" />
         </div>

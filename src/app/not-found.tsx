@@ -1,5 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { de } from "@/content/de";
+
+export const metadata: Metadata = { title: de.notFound.title, robots: { index: false, follow: false } };
 
 export default function NotFound() {
   return (
